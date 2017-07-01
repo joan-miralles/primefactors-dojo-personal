@@ -1,27 +1,20 @@
 package es.joanmiralles;
 
-public class PrimeFactorsKata {
+import java.util.HashSet;
+import java.util.Set;
 
-    public static int[] generate(int number) {
-        int[] list = new int[number];
-        if (number == 1) {
-            list[0] = number;
-        }
-        if (number == 2) {
-            list[0] = 1;
-            list[1] = 2;
-        }
-        if (number == 3) {
-            list[0] = 1;
-            list[1] = 2;
-            list[2] = 3;
-        }
-        if (number == 4) {
-            list[0] = 1;
-            list[1] = 2;
-            list[2] = 3;
-        }
-        return list;
+class PrimeFactorsKata {
+
+    static Set<Integer> generate(int number) {
+        return generateFrom(number, 2, new HashSet<>());
     }
 
+    private static Set<Integer> generateFrom(int number, int cand, Set<Integer> accummulated) {
+        if (number == 1) return accummulated;
+        while (number % cand == 0) {
+            number /= cand;
+            if (!accummulated.contains(cand)) accummulated.add(cand);
+        }
+        return generateFrom(number, cand + 1, accummulated);
+    }
 }
