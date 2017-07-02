@@ -2,53 +2,43 @@ package es.joanmiralles;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singleton;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class PrimeFactorsKataTest {
-    private static Set<Integer> SET_2_3 = new HashSet<>();
-    private static Set<Integer> SET_2_3_7 = new HashSet<>();
 
-    static {
-        SET_2_3.add(2);
-        SET_2_3.add(3);
-        SET_2_3_7.addAll(asList(2, 3, 7));
+    @Test
+    public void give_int_zero_then_return_one() {
+        assertThat(PrimeFactorsKata.generate(0), is(emptyList()));
     }
 
     @Test
-    public void give_int_one_then_return_one() {
-        assertThat(PrimeFactorsKata.generate(1), is(emptySet()));
+    public void give_int_one_then_return_empty() {
+        assertThat(PrimeFactorsKata.generate(1), is(emptyList()));
     }
 
     @Test
     public void give_prime_number_then_return_the_same_number() {
-        assertThat(PrimeFactorsKata.generate(2), is(singleton(2)));
-        assertThat(PrimeFactorsKata.generate(3), is(singleton(3)));
-        assertThat(PrimeFactorsKata.generate(7), is(singleton(7)));
-        assertThat(PrimeFactorsKata.generate(13), is(singleton(13)));
+        assertThat(PrimeFactorsKata.generate(2), is(singletonList(2)));
+        assertThat(PrimeFactorsKata.generate(13), is(singletonList(13)));
+    }
+
+    @Test(timeout = 10000)
+    public void give_max_int_then_return_max_int() {
+        assertThat(PrimeFactorsKata.generate(Integer.MAX_VALUE), is(singletonList(2147483647)));
     }
 
     @Test
     public void give_two_factor_number_then_return_two() {
-        assertThat(PrimeFactorsKata.generate(8), is(singleton(2)));
-        assertThat(PrimeFactorsKata.generate(256), is(singleton(2)));
+        assertThat(PrimeFactorsKata.generate(256), is(singletonList(2)));
     }
 
     @Test
     public void give_int_6_then_return_two_three() {
-        assertThat(PrimeFactorsKata.generate(6), is(SET_2_3));
-        assertThat(PrimeFactorsKata.generate(12), is(SET_2_3));
-        assertThat(PrimeFactorsKata.generate(42), is(SET_2_3_7));
+        assertThat(PrimeFactorsKata.generate(12), is(asList(2, 3)));
     }
 
-    @Test
-    public void test() {
-        System.out.println("91 = " + PrimeFactorsKata.generate(91));
-    }
 }
